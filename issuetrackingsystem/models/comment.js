@@ -1,21 +1,34 @@
-var mongoose = require('mongoose');
+'use strict'
 
-var Schema = mongoose.Schema;
+module.exports = (sequelize, DataTypes) => {  
+  const Comment = sequelize.define('comment', {
+    id: {
+      type: DataTypes.UUID,
+      primaryKey: true,
+      defaultValue: DataTypes.UUIDV4
+    },
+    description: {
+      type: DataTypes.STRING,
+      required: true
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+  });
 
-var CommentSchema = new Schema(
-  {
-    posted_by: {type: Schema.ObjectId, ref: 'User', required: true},
-    on_issue: {type: Schema.ObjectId, ref: 'Issue', required: true},
-    description: {type: String, required: true, max: 1000},
-  }
-);
+  Comment.associate = (models) => {
+    Comment.belongsTo(models.User, {
+      foreignKey: 'postedBy',
+      onDelete: 'CASCADE',
+    });
 
-// Virtual for comment's URL
-CommentSchema
-.virtual('url')
-.get(function () {
-  return 'comments/' + this._id;
-});
+    Comment.belongsTo(models.Issue, {
+      foreignKey: 'onIssue',
+      onDelete: 'CASCADE',
+    });
 
-//Export model
-module.exports = mongoose.model('Comment', CommentSchema);
+  };
+
+  return Comment;
+};
