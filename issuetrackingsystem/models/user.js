@@ -1,24 +1,45 @@
-var mongoose = require('mongoose');
+'use strict'
 
-var Schema = mongoose.Schema;
+module.exports = (sequelize, DataTypes) => {
+  const Issue = sequelize.define('issue', {
+    id: {
+      type: DataTypes.UUID,
+      primaryKey: true,
+      defaultValue: DataTypes.UUIDV4
+    },
+    username: {
+      type: DataTypes.STRING,
+      required: true
+    },
 
-var UserSchema = new Schema(
-  {
-    username: {type: String, required: true, max: 100},
-    name: {type: String, required: true, max: 100},
-    email_id: {type: String, required: true, max: 100},
-    phone:{ type: Number, required: false, length: 10 },
-    password: {type: String, required: true, max: 100},
-    role: {type: Schema.ObjectId, ref: 'Role', required: true},
-  }
-);
+    name: {
+      type: DataTypes.STRING,
+      required: true
+    },
 
-// Virtual for user's URL
-UserSchema
-.virtual('url')
-.get(function () {
-  return '/users/' + this._id;
-});
+    phone: {
+      type: DataTypes.INTEGER
+    },
 
-//Export model
-module.exports = mongoose.model('User', UserSchema);
+    emailId: {
+      type: DataTypes.STRING,
+      required: true
+    },
+
+    password: {
+      type: DataTypes.STRING,
+      required: true
+    },
+  }, {
+      classMethods: {
+        associate: (models) => {
+          Issue.belongsTo(models.Role, {
+            foreignKey: 'role'
+          });
+        },
+      },
+    });
+
+
+  return Issue;
+};

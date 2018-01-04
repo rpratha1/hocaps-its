@@ -1,21 +1,25 @@
-var mongoose = require('mongoose');
+'use strict'
 
-var Schema = mongoose.Schema;
+module.exports = (sequelize, DataTypes) => {  
+  const Role = sequelize.define('role', {
+    id: {
+      type: DataTypes.UUID,
+      primaryKey: true,
+      defaultValue: DataTypes.UUIDV4
+    },
+    name: {
+      type: DataTypes.STRING,
+      required: true
+    },
+    hierarchyNo: {
+      type: DataTypes.INTEGER,
+      required: true
+    },
+    description: {
+      type: DataTypes.STRING,
+      required: true
+    },
+  });
 
-var RoleSchema = new Schema(
-  {
-    name: {type: String, required: true, max: 100},
-    hierarchy_no: {type: Number, required: true, min:0, max: 100},
-    description: {type: String, required: false, max: 1000},
-  }
-);
-
-// Virtual for role's URL
-RoleSchema
-.virtual('url')
-.get(function () {
-  return '/roles/' + this._id;
-});
-
-//Export model
-module.exports = mongoose.model('Role', RoleSchema);
+  return Role;
+};

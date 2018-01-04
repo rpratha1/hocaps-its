@@ -1,20 +1,21 @@
-var mongoose = require('mongoose');
+'use strict'
 
-var Schema = mongoose.Schema;
+module.exports = (sequelize, DataTypes) => {  
+  const IssueType = sequelize.define('issueType', {
+    id: {
+      type: DataTypes.UUID,
+      primaryKey: true,
+      defaultValue: DataTypes.UUIDV4
+    },
+    name: {
+      type: DataTypes.STRING,
+      required: true
+    },
+    description: {
+      type: DataTypes.STRING,
+      required: true
+    },
+  });
 
-var IssueTypeSchema = new Schema(
-  {
-    name: {type: String, required: true, max: 100},
-    description: {type: String, required: false, max: 1000},
-  }
-);
-
-// Virtual for issuetype's URL
-IssueTypeSchema
-.virtual('url')
-.get(function () {
-  return '/issueType/' + this._id;
-});
-
-//Export model
-module.exports = mongoose.model('IssueType', IssueTypeSchema);
+  return IssueType;
+};

@@ -1,6 +1,6 @@
 'use strict'
 
-module.exports = (sequelize, DataTypes) => {  
+module.exports = (sequelize, DataTypes) => {
   const Comment = sequelize.define('comment', {
     id: {
       type: DataTypes.UUID,
@@ -15,20 +15,21 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       allowNull: false
     },
-  });
+  }, {
+      classMethods: {
+        associate: (models) => {
+          Comment.belongsTo(models.User, {
+            foreignKey: 'postedBy',
+            onDelete: 'CASCADE',
+          });
 
-  Comment.associate = (models) => {
-    Comment.belongsTo(models.User, {
-      foreignKey: 'postedBy',
-      onDelete: 'CASCADE',
+          Comment.belongsTo(models.Issue, {
+            foreignKey: 'onIssue',
+            onDelete: 'CASCADE',
+          });
+        },
+      },
     });
-
-    Comment.belongsTo(models.Issue, {
-      foreignKey: 'onIssue',
-      onDelete: 'CASCADE',
-    });
-
-  };
 
   return Comment;
 };
