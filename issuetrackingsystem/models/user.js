@@ -1,11 +1,12 @@
 'use strict'
 
 module.exports = (sequelize, DataTypes) => {
-  const Issue = sequelize.define('issue', {
+  const User = sequelize.define('user', {
     id: {
-      type: DataTypes.UUID,
+      type: DataTypes.INTEGER,
       primaryKey: true,
-      defaultValue: DataTypes.UUIDV4
+      autoIncrement: true,
+      allowNull: false
     },
     username: {
       type: DataTypes.STRING,
@@ -30,16 +31,23 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       required: true
     },
-  }, {
+
+  });
+  User.associate = function (models) {
+    User.belongsTo(models.Role, {
+      foreignKey: 'role'
+    });
+  };
+  /*}, {
       classMethods: {
         associate: (models) => {
-          Issue.belongsTo(models.Role, {
+          User.belongsTo(models.Role, {
             foreignKey: 'role'
           });
         },
       },
-    });
+    });*/
 
 
-  return Issue;
+  return User;
 };

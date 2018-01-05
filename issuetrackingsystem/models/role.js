@@ -3,9 +3,10 @@
 module.exports = (sequelize, DataTypes) => {  
   const Role = sequelize.define('role', {
     id: {
-      type: DataTypes.UUID,
+      type: DataTypes.INTEGER,
       primaryKey: true,
-      defaultValue: DataTypes.UUIDV4
+      autoIncrement: true,
+      allowNull: false
     },
     name: {
       type: DataTypes.STRING,
@@ -16,8 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       required: true
     },
     description: {
-      type: DataTypes.STRING,
-      required: true
+      type: DataTypes.TEXT,
     },
   });
 

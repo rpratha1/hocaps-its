@@ -3,16 +3,17 @@
 module.exports = (sequelize, DataTypes) => {  
   const IssueType = sequelize.define('issueType', {
     id: {
-      type: DataTypes.UUID,
+      type: DataTypes.INTEGER,
       primaryKey: true,
-      defaultValue: DataTypes.UUIDV4
+      autoIncrement: true,
+      allowNull: false
     },
     name: {
       type: DataTypes.STRING,
       required: true
     },
     description: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       required: true
     },
   });

@@ -3,9 +3,10 @@
 module.exports = (sequelize, DataTypes) => {
   const Issue = sequelize.define('issue', {
     id: {
-      type: DataTypes.UUID,
+      type: DataTypes.INTEGER,
       primaryKey: true,
-      defaultValue: DataTypes.UUIDV4
+      autoIncrement: true,
+      allowNull: false
     },
     summary: {
       type: DataTypes.STRING,
@@ -13,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     },
 
     description: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       required: true
     },
 
@@ -32,11 +33,29 @@ module.exports = (sequelize, DataTypes) => {
       required: true
     },
 
-    modifiedAt: {
-      type: DataTypes.DATE
+    updatedAt: {
+      type: DataTypes.DATE,
+      allowNull: false
     },
 
-  }, {
+  
+  });
+  Issue.associate = function (models) {
+    Issue.belongsTo(models.User, {
+      as: 'createdBy',
+      foreignKey: 'createdBy'
+    });
+
+    Issue.belongsTo(models.User, {
+      as: 'assignedTo',
+      foreignKey: 'assignedTo'
+    });
+
+    Issue.belongsTo(models.IssueType, {
+      foreignKey: 'issueType'
+    });
+  };
+ /* }, {
       classMethods: {
         associate: (models) => {
           Issue.belongsTo(models.User, {
@@ -53,9 +72,8 @@ module.exports = (sequelize, DataTypes) => {
             foreignKey: 'issueType'
           });
         },
-      },
+      },*/
 
-    });
-
+    
   return Issue;
 };
