@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
-const rolesController = require('../controllers').roles;
+const companiesController = require('../controllers').companys;
 
 /* POST roles listing. */
-router.post('/', rolesController.create);
+router.post('/', companiesController.create);
 
 module.exports = router;
