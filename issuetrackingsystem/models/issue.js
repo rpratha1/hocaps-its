@@ -41,38 +41,20 @@ module.exports = (sequelize, DataTypes) => {
   
   });
   Issue.associate = function (models) {
-    Issue.belongsTo(models.User, {
+    Issue.belongsTo(models.user, {
       as: 'createdBy',
-      foreignKey: 'createdBy'
+      foreignKey: 'createdByUser'
     });
 
-    Issue.belongsTo(models.User, {
+    Issue.belongsTo(models.user, {
       as: 'assignedTo',
-      foreignKey: 'assignedTo'
+      foreignKey: 'assignedToUser'
     });
 
-    Issue.belongsTo(models.IssueType, {
-      foreignKey: 'issueType'
+    Issue.belongsTo(models.issueType, {
+      foreignKey: 'issueTypeID'
     });
   };
- /* }, {
-      classMethods: {
-        associate: (models) => {
-          Issue.belongsTo(models.User, {
-            as: 'createdBy',
-            foreignKey: 'createdBy'
-          });
-
-          Issue.belongsTo(models.User, {
-            as: 'assignedTo',
-            foreignKey: 'assignedTo'
-          });
-
-          Issue.belongsTo(models.IssueType, {
-            foreignKey: 'issueType'
-          });
-        },
-      },*/
 
     
   return Issue;

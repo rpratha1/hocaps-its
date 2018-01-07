@@ -1,12 +1,14 @@
-const Role = require('../models').Role;
+const Role = require('../models').role;
 
 module.exports = {
   create(req, res) {
-    return Todo
+    return Role
       .create({
-        title: req.body.title,
+        name: req.body.name,
+        hierarchyNo: req.body.hierarchyNo,
+        description:req.body.description
       })
-      .then(todo => res.status(201).send(todo))
+      .then(role => res.status(201).send(role))
       .catch(error => res.status(400).send(error));
   },
 };

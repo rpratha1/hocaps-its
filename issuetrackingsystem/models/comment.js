@@ -18,31 +18,16 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
   Comment.associate = function (models) {
-    Comment.belongsTo(models.User, {
+    Comment.belongsTo(models.user, {
       foreignKey: 'postedBy',
       onDelete: 'CASCADE',
     });
 
-    Comment.belongsTo(models.Issue, {
+    Comment.belongsTo(models.issue, {
       foreignKey: 'onIssue',
       onDelete: 'CASCADE',
     });
   };
-  /*}, {
-      classMethods: {
-        associate: (models) => {
-          Comment.belongsTo(models.User, {
-            foreignKey: 'postedBy',
-            onDelete: 'CASCADE',
-          });
-
-          Comment.belongsTo(models.Issue, {
-            foreignKey: 'onIssue',
-            onDelete: 'CASCADE',
-          });
-        },
-      },
-    });*/
 
   return Comment;
 };

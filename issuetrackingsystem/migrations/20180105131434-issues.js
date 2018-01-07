@@ -25,21 +25,21 @@ module.exports = {
                     type: Sequelize.STRING,
                     required: true
                 },
-                createdBy: {
+                createdByUser: {
                     type: Sequelize.INTEGER,
                     references: {
                         model: 'users',
                         key: 'id'
                     },
                 },
-                assignedTo: {
+                assignedToUser: {
                     type: Sequelize.INTEGER,
                     references: {
                         model: 'users',
                         key: 'id'
                     },
                 },
-                issueType: {
+                issueTypeID: {
                     type: Sequelize.INTEGER,
                     references: {
                         model: 'issueTypes',

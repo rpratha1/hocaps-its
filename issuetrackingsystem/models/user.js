@@ -34,24 +34,14 @@ module.exports = (sequelize, DataTypes) => {
 
   });
   User.associate = function (models) {
-    User.belongsTo(models.Role, {
-      foreignKey: 'role'
+    User.belongsTo(models.role, {
+      foreignKey: 'roleid'
     });
 
-    User.belongsTo(models.Company,{
+    User.belongsTo(models.company,{
       foreignKey: 'companyid'
     });
   };
-  /*}, {
-      classMethods: {
-        associate: (models) => {
-          User.belongsTo(models.Role, {
-            foreignKey: 'role'
-          });
-        },
-      },
-    });*/
-
 
   return User;
 };
