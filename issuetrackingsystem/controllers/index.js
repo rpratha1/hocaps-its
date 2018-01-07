@@ -1,7 +1,7 @@
 const roles = require('./roles');
-const companys = require('./companys');
+const companies = require('./companies');
 
 module.exports = {
   roles,
-  companys
+  companies
 };

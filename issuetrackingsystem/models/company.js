@@ -22,6 +22,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TEXT,
     },
 
-  });
+  },
+  { freezeTableName: true });
   return Company;
 };
